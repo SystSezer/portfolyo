@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+ornekler/fiyat_gecmisi.csv
+ornekler/*_temiz.csv
+ornekler/*_sorunlu.csv
