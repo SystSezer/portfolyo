@@ -314,9 +314,9 @@
 <script>
   document.getElementById('yil').textContent = new Date().getFullYear();
 
-  // Formu etkinlestirmek icin: Cloudflare Worker adresini buraya yapistir.
+  // Cloudflare Worker: iletisim formu -> Telegram.
   // Bos birakilirsa form kendini gizler ve ziyaretci e-posta baglantisini kullanir.
-  const FORM_ENDPOINT = "";
+  const FORM_ENDPOINT = "https://twilight-cherry-7dd6.sezerkiras28.workers.dev";
 
   (function () {
     const form = document.getElementById('contact-form');
