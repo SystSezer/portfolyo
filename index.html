@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sezer Kıraş — Veri, Otomasyon ve İçerik Freelancer</title>
-<meta name="description" content="Veri girişi ve temizleme, Python ile otomasyon ve web scraping, çeviri ve içerik, WordPress bakımı. Uzaktan çalışır, hızlı teslim eder.">
+<title>Sezer Kıraş — Monitoring &amp; alerting pipelines</title>
+<meta name="description" content="I build pipelines that watch a source and tell you when something changes: scraping, APIs, LLM filtering, and alerts to Telegram or Slack. Fixed price, working delivery.">
 <style>
   :root {
     --bg: #ffffff; --bg-alt: #f6f7f9; --card: #ffffff; --border: #e3e6eb;
@@ -26,6 +26,7 @@
   }
   .kap { max-width: 900px; margin: 0 auto; padding: 0 20px; }
   a { color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
   header { padding: 64px 0 44px; border-bottom: 1px solid var(--border); }
   header h1 { margin: 0 0 6px; font-size: 2.1rem; letter-spacing: -0.02em; }
@@ -41,7 +42,7 @@
   section { padding: 46px 0; border-bottom: 1px solid var(--border); }
   section:last-of-type { border-bottom: 0; }
   h2 { font-size: 1.32rem; margin: 0 0 6px; letter-spacing: -0.01em; }
-  .alt { color: var(--muted); font-size: .93rem; margin: 0 0 22px; }
+  .alt { color: var(--muted); font-size: .93rem; margin: 0 0 22px; max-width: 64ch; }
 
   .izgara { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
   .kart {
@@ -75,11 +76,23 @@
   .adim div p { margin: 0; color: var(--muted); font-size: .93rem; }
   .adim div strong { display: block; margin-bottom: 2px; color: var(--text); font-size: .97rem; }
 
-  .diller { list-style: none; padding: 0; margin: 0; }
-  .diller li { display: flex; justify-content: space-between; gap: 16px;
-               padding: 9px 0; border-bottom: 1px solid var(--border); font-size: .95rem; }
-  .diller li:last-child { border-bottom: 0; }
-  .diller span { color: var(--muted); font-size: .88rem; text-align: right; }
+  form.iletisim-form { display: grid; gap: 12px; max-width: 520px; margin-top: 4px; }
+  form.iletisim-form label { font-size: .88rem; font-weight: 600; display: block; margin-bottom: 4px; }
+  form.iletisim-form input, form.iletisim-form textarea {
+    width: 100%; font: inherit; font-size: .94rem; color: var(--text);
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 12px;
+  }
+  form.iletisim-form textarea { min-height: 120px; resize: vertical; }
+  form.iletisim-form button {
+    justify-self: start; font: inherit; font-weight: 600; font-size: .94rem;
+    background: var(--accent); color: #fff; border: 0;
+    border-radius: 8px; padding: 11px 22px; cursor: pointer;
+  }
+  form.iletisim-form button:disabled { opacity: .55; cursor: default; }
+  .form-durum { font-size: .9rem; margin: 0; min-height: 1.3em; }
+  .form-durum.ok { color: var(--ok); }
+  .form-durum.hata { color: #d64545; }
 
   footer { padding: 34px 0 60px; color: var(--muted); font-size: .87rem; }
   code { background: var(--bg-alt); padding: 2px 6px; border-radius: 4px; font-size: .87em; }
@@ -90,150 +103,141 @@
 <header>
   <div class="kap">
     <h1>Sezer Kıraş</h1>
-    <p class="unvan">Veri · Otomasyon · İçerik — uzaktan çalışan freelancer</p>
+    <p class="unvan">Monitoring &amp; alerting pipelines — Python and n8n</p>
     <p class="ozet">
-      Sıkıcı ve tekrar eden işleri hızlı ve hatasız bitiririm: dağınık listeleri temizlemek,
-      siteden veri toplayıp tabloya dökmek, içerik yazmak ve çevirmek, WordPress sitelerini
-      ayakta tutmak. Küçük işlere de açığım — bir işi iyi yapıp uzun vadeli çalışmaya
-      dönüştürmeyi tercih ederim.
+      Most automation requests come down to the same shape: something out there changes, and
+      somebody needs to know in minutes instead of finding out next week. I build that pipeline
+      end to end — sources, filtering, and the alert that lands on your phone. Fixed price,
+      working delivery, and I'll run it against your real source before you pay.
     </p>
     <ul class="iletisim">
-      <li><a href="mailto:sezerkiras28@gmail.com">E-posta</a></li>
+      <li><a href="#contact">Start a project</a></li>
+      <li><a href="mailto:sezerkiras28@gmail.com">Email</a></li>
       <li><a href="https://github.com/SystSezer">GitHub</a></li>
-      <li><a href="https://wa.me/905421791542">WhatsApp</a></li>
     </ul>
   </div>
 </header>
 
 <section>
   <div class="kap">
-    <h2>Ne yapıyorum</h2>
-    <p class="alt">Aşağıdakilerin hepsini tek başıma uçtan uca teslim ederim.</p>
+    <h2>What I build</h2>
+    <p class="alt">Three things, all the same machine at different speeds. I deliver end to end and on my own.</p>
     <div class="izgara">
       <div class="kart">
-        <h3>Veri girişi &amp; veri temizleme</h3>
-        <p>Dağınık Excel/CSV listelerini kullanılabilir hale getiririm: tekrar eden kayıtlar,
-           bozuk telefon ve e-posta formatları, karışık tarihler, kayan sütunlar.</p>
-        <span class="fiyat">saatlik 5 $ başlangıç</span>
+        <h3>Monitoring &amp; alerts</h3>
+        <p>You name what to watch — competitor prices, tenders, job boards, stock, listings,
+           regulatory pages. I connect the sources, dedupe, filter out the noise, and push what
+           matters to Telegram, Slack, email or a sheet. Runs unattended, and tells you when it
+           breaks.</p>
+        <span class="fiyat">from $250 · single source in 3 days</span>
       </div>
       <div class="kart">
-        <h3>Web scraping &amp; otomasyon</h3>
-        <p>Siteden ürün, fiyat, ilan veya iletişim bilgisi toplayıp tabloya dökerim.
-           robots.txt'e uyan, siteyi yormayan, kendi kendine çalışan kurulum.</p>
-        <span class="fiyat">saatlik 8 $ başlangıç</span>
+        <h3>One-off extraction</h3>
+        <p>You name the target and the fields, I deliver a clean, deduped, enriched CSV. No
+           subscription, no ongoing commitment. Useful for lead lists, market snapshots and
+           migrations.</p>
+        <span class="fiyat">fixed price · 48h turnaround</span>
       </div>
       <div class="kart">
-        <h3>Çeviri &amp; altyazı</h3>
-        <p>Türkçe–İngilizce çeviri, son okuma ve altyazı zamanlaması. Diğer dillerde
-           CAT araçları ve yapay zeka destekli çeviri + insan kontrolü.</p>
-        <span class="fiyat">saatlik 6 $ başlangıç</span>
-      </div>
-      <div class="kart">
-        <h3>İçerik &amp; SEO</h3>
-        <p>Blog yazısı, ürün açıklaması, e-ticaret listeleme metni. Anahtar kelime
-           araştırması ve okunabilir, kopyala-yapıştır olmayan içerik.</p>
-        <span class="fiyat">saatlik 6 $ başlangıç</span>
-      </div>
-      <div class="kart">
-        <h3>WordPress &amp; e-ticaret</h3>
-        <p>Site kurulumu, tema/eklenti düzenleme, ürün yükleme, hız ve mobil uyumluluk
-           iyileştirmesi, düzenli bakım.</p>
-        <span class="fiyat">saatlik 7 $ başlangıç</span>
-      </div>
-      <div class="kart">
-        <h3>Sanal asistanlık</h3>
-        <p>Web araştırması, lead listesi çıkarma, e-posta ve takvim yönetimi, dosya
-           düzenleme, tekrar eden ofis işlerinin otomasyonu.</p>
-        <span class="fiyat">saatlik 5 $ başlangıç</span>
+        <h3>n8n workflows, self-hosted</h3>
+        <p>If you want to own and edit the automation yourself, I build it in n8n instead of
+           code — and I can host it on your own server when the data isn't allowed to leave it.</p>
+        <span class="fiyat">$600–900 · 1–2 weeks</span>
       </div>
     </div>
+    <p class="alt" style="margin-top:22px;margin-bottom:0">
+      Optional after delivery: hosting, monitoring and fixes at <strong>$75/month</strong>. Cancel anytime.
+    </p>
   </div>
 </section>
 
 <section>
   <div class="kap">
-    <h2>Çalışmalar</h2>
+    <h2>Things I have built</h2>
     <p class="alt">
-      Hepsi kendi yazdığım, çalışır durumdaki projeler. Kodun tamamı GitHub'da açık —
-      inceleyebilir, kendi verinizle deneyebilirsiniz.
+      All of these are mine, written by me and currently running. The code is open — read it,
+      or run it against your own data before you decide anything.
     </p>
 
     <div class="proje">
       <div class="proje-bas">
-        <h3>FreelanceRadar — iş tarama ve teklif hazırlama aracı</h3>
-        <span class="rozet">çalışır durumda</span>
+        <h3>FreelanceRadar — multi-source monitoring with LLM filtering</h3>
+        <span class="rozet">running</span>
       </div>
       <p>
-        Beş farklı iş panosunun açık API ve RSS beslemelerini periyodik olarak tarayan,
-        gelen ilanları bir profile göre puanlayan ve uygun olanlar için teklif taslağı
-        hazırlayan bir web uygulaması. Tek komutla ayağa kalkar, kendi makinenizde çalışır.
+        A web application that polls five job boards through their public APIs and RSS feeds,
+        scores every incoming listing against a profile, and drafts a proposal for the ones worth
+        answering. Roughly 950 listings processed so far. This is the reference build for
+        everything on this page.
       </p>
       <ul>
-        <li>Eklenti mimarisi: yeni bir iş kaynağı eklemek tek dosya yazmak demek</li>
-        <li>İki katmanlı puanlama: önce ücretsiz kural filtresi, sonra yapay zeka —
-            elenen ilanlar için API çağrısı yapılmaz, maliyet boşa gitmez</li>
-        <li>Kanban panosu ile başvuru takibi, Telegram bildirimi, dashboard metrikleri</li>
-        <li>İsteklerde bekleme, robots.txt kontrolü, gizlenmeyen User-Agent</li>
+        <li>Connector architecture — adding a sixth source means writing one file, not a rewrite</li>
+        <li>Two-layer scoring: a free rule filter first, an LLM pass only on what survives, so
+            discarded items never cost an API call</li>
+        <li>Kanban tracking, Telegram notifications, dashboard metrics</li>
+        <li>Built ToS-safe on purpose: request throttling, robots.txt checked, honest User-Agent,
+            no headless login, no CAPTCHA solving, no automated submission</li>
       </ul>
       <div class="etiketler">
         <span class="etiket">Python</span><span class="etiket">FastAPI</span>
         <span class="etiket">SQLAlchemy</span><span class="etiket">SQLite</span>
         <span class="etiket">APScheduler</span><span class="etiket">Claude API</span>
-        <span class="etiket">Jinja2</span><span class="etiket">Tailwind</span>
+        <span class="etiket">Jinja2</span>
       </div>
       <div class="baglantilar">
-        <a href="https://github.com/SystSezer/freelance-radar">Kaynak kodu →</a>
+        <a href="#contact">Ask for a walkthrough →</a>
       </div>
     </div>
 
     <div class="proje">
       <div class="proje-bas">
-        <h3>CSV liste temizleyici</h3>
-        <span class="rozet">çalışır durumda</span>
+        <h3>Price tracker</h3>
+        <span class="rozet">running</span>
       </div>
       <p>
-        Müşteriden gelen dağınık kişi listesini temiz bir tabloya çevirir. Bir veri girişi
-        işinde saatler süren kontrolü saniyelere indirir — ve önemlisi, emin olamadığı
-        satırları uydurmaz, ayrı bir "elle bakılmalı" raporuna yazar.
+        Checks a set of product pages on a schedule, accumulates prices to CSV, and reports what
+        went up or down since the previous run. The small version of the monitoring service above.
       </p>
       <ul>
-        <li>Türkçe büyük/küçük harf sorununu doğru çözer (<code>i → İ</code>, <code>I → ı</code>)</li>
-        <li>Telefonları tek formata getirir, cep olmayanları işaretler</li>
-        <li>Sekiz farklı tarih yazımını ve Türkçe ay adlarını tanır</li>
-        <li>Kaçak virgül yüzünden kayan sütunları tespit eder</li>
-        <li>E-postaya göre tekrar eden kayıtları ayıklar</li>
-      </ul>
-      <div class="etiketler">
-        <span class="etiket">Python</span><span class="etiket">CSV</span>
-        <span class="etiket">veri temizleme</span><span class="etiket">bağımlılık yok</span>
-      </div>
-      <div class="baglantilar">
-        <a href="https://github.com/SystSezer/portfolyo/blob/main/ornekler/csv_temizleyici.py">Kaynak kodu →</a>
-      </div>
-    </div>
-
-    <div class="proje">
-      <div class="proje-bas">
-        <h3>Fiyat takip botu</h3>
-        <span class="rozet">çalışır durumda</span>
-      </div>
-      <p>
-        Belirlenen ürün sayfalarını düzenli aralıklarla kontrol eder, fiyatları CSV'ye
-        biriktirir ve bir önceki çalıştırmaya göre zam/indirim raporu çıkarır.
-      </p>
-      <ul>
-        <li>robots.txt'e uyar, izin verilmeyen adresi atlar</li>
-        <li>Geçici ağ hatalarında artan bekleme ile tekrar dener, kalıcı hatada vazgeçer</li>
-        <li>Sunucu kodlama bildirmediğinde gerçek kodlamayı tespit eder —
-            Türkçe karakterler ve para birimi sembolleri bozulmaz</li>
-        <li>Site yapısı değişip seçici tutmazsa boş satır yazmak yerine uyarır</li>
+        <li>Respects robots.txt and skips disallowed addresses</li>
+        <li>Retries transient network errors with backoff, gives up cleanly on permanent ones</li>
+        <li>Detects the real encoding when the server doesn't declare one, so currency symbols
+            and non-ASCII characters don't get mangled</li>
+        <li>When a site's markup changes and a selector stops matching, it warns instead of
+            silently writing empty rows</li>
       </ul>
       <div class="etiketler">
         <span class="etiket">Python</span><span class="etiket">requests</span>
-        <span class="etiket">BeautifulSoup</span><span class="etiket">web scraping</span>
+        <span class="etiket">BeautifulSoup</span><span class="etiket">scraping</span>
       </div>
       <div class="baglantilar">
-        <a href="https://github.com/SystSezer/portfolyo/blob/main/ornekler/fiyat_takip.py">Kaynak kodu →</a>
+        <a href="https://github.com/SystSezer/portfolyo/blob/main/ornekler/fiyat_takip.py">Source code →</a>
+      </div>
+    </div>
+
+    <div class="proje">
+      <div class="proje-bas">
+        <h3>CSV list cleaner</h3>
+        <span class="rozet">running</span>
+      </div>
+      <p>
+        Turns a messy contact export into a clean table — the step that usually sits between a
+        scrape and something useful. Importantly, it never invents a value it isn't sure about;
+        those rows go to a separate "needs a human" report.
+      </p>
+      <ul>
+        <li>Handles Turkish casing correctly (<code>i → İ</code>, <code>I → ı</code>)</li>
+        <li>Normalises phone numbers to one format and flags non-mobile entries</li>
+        <li>Recognises eight date notations, including Turkish month names</li>
+        <li>Detects columns shifted by a stray comma</li>
+        <li>Removes duplicates by email</li>
+      </ul>
+      <div class="etiketler">
+        <span class="etiket">Python</span><span class="etiket">CSV</span>
+        <span class="etiket">data cleaning</span><span class="etiket">no dependencies</span>
+      </div>
+      <div class="baglantilar">
+        <a href="https://github.com/SystSezer/portfolyo/blob/main/ornekler/csv_temizleyici.py">Source code →</a>
       </div>
     </div>
   </div>
@@ -241,63 +245,120 @@
 
 <section>
   <div class="kap">
-    <h2>Nasıl çalışırım</h2>
-    <p class="alt">Sürprizsiz, net bir süreç.</p>
+    <h2>How I work</h2>
+    <p class="alt">No surprises.</p>
     <div class="adim">
       <div class="adim-no">1</div>
-      <div><strong>Önce soru sorarım</strong>
-        <p>İşe başlamadan kapsamı netleştiririm. Anlamadığım bir şey varsa tahmin etmem, sorarım.</p></div>
+      <div><strong>I ask first</strong>
+        <p>Scope gets settled before work starts. If something is unclear I ask instead of guessing.</p></div>
     </div>
     <div class="adim">
       <div class="adim-no">2</div>
-      <div><strong>Küçük bir örnek gönderirim</strong>
-        <p>Büyük işlerde önce küçük bir parçayı teslim ederim; yönü onaylayınca devam ederiz.</p></div>
+      <div><strong>You see output before you pay</strong>
+        <p>On a small scope I build the first milestone against your real source, not a demo. Judge
+           it on what comes out.</p></div>
     </div>
     <div class="adim">
       <div class="adim-no">3</div>
-      <div><strong>Söz verdiğim tarihte teslim ederim</strong>
-        <p>Gecikme riski görürsem tarih gelmeden önce haber veririm.</p></div>
+      <div><strong>I deliver on the date I gave</strong>
+        <p>If I see a delay coming, you hear about it before the deadline, not after.</p></div>
     </div>
     <div class="adim">
       <div class="adim-no">4</div>
-      <div><strong>Teslimden sonra da yanıtlarım</strong>
-        <p>Teslim sonrası düzeltmeler ücretsizdir. Otomasyon işlerinde nasıl çalıştırılacağını yazılı anlatırım.</p></div>
+      <div><strong>I answer after delivery</strong>
+        <p>Post-delivery fixes are free. Every pipeline ships with written instructions for
+           running and changing it.</p></div>
     </div>
   </div>
 </section>
 
-<section>
+<section id="contact">
   <div class="kap">
-    <h2>Diller</h2>
-    <p class="alt">Hangi dilde ne düzeyde çalışabildiğim — abartısız.</p>
-    <ul class="diller">
-      <li><b>Türkçe</b> <span>Ana dil — çeviri, yazım, son okuma</span></li>
-      <li><b>İngilizce</b> <span>İleri — müşteri iletişimi, çeviri, içerik</span></li>
-      <li><b>Almanca</b> <span>Temel — CAT araçları ve yapay zeka destekli çeviri + son okuma</span></li>
-      <li><b>İspanyolca</b> <span>Temel — CAT araçları ve yapay zeka destekli çeviri + son okuma</span></li>
-      <li><b>İtalyanca</b> <span>Temel — CAT araçları ve yapay zeka destekli çeviri + son okuma</span></li>
-      <li><b>Çince</b> <span>Temel — CAT araçları ve yapay zeka destekli çeviri + son okuma</span></li>
-      <li><b>Japonca</b> <span>Temel — CAT araçları ve yapay zeka destekli çeviri + son okuma</span></li>
-    </ul>
-  </div>
-</section>
+    <h2>Start a project</h2>
+    <p class="alt">
+      Tell me what you'd want watched and how you'd want to hear about it. I reply the same day.
+      Small trial jobs are welcome — they're the easiest way to start.
+    </p>
 
-<section>
-  <div class="kap">
-    <h2>Birlikte çalışalım</h2>
-    <p class="alt">Küçük bir deneme işiyle başlamak en kolayı. Bir mesaj atın, aynı gün dönerim.</p>
-    <ul class="iletisim">
-      <li><a href="mailto:sezerkiras28@gmail.com">E-posta gönder</a></li>
-      <li><a href="https://wa.me/905421791542">WhatsApp'tan yaz</a></li>
-      <li><a href="https://github.com/SystSezer">GitHub'a bak</a></li>
+    <form class="iletisim-form" id="contact-form" novalidate>
+      <div>
+        <label for="cf-name">Your name</label>
+        <input id="cf-name" name="name" type="text" autocomplete="name" required>
+      </div>
+      <div>
+        <label for="cf-email">Email</label>
+        <input id="cf-email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div>
+        <label for="cf-msg">What would you like to monitor or extract?</label>
+        <textarea id="cf-msg" name="message" required></textarea>
+      </div>
+      <button type="submit" id="cf-send">Send</button>
+      <p class="form-durum" id="cf-status" role="status" aria-live="polite"></p>
+    </form>
+
+    <ul class="iletisim" style="margin-top:22px">
+      <li><a href="mailto:sezerkiras28@gmail.com">Email instead</a></li>
+      <li><a href="https://github.com/SystSezer">GitHub</a></li>
     </ul>
   </div>
 </section>
 
 <footer>
-  <div class="kap">© <span id="yil">2026</span> Sezer Kıraş · Uzaktan çalışır, dünya genelinde iş alır.</div>
+  <div class="kap">© <span id="yil">2026</span> Sezer Kıraş · Remote, working across EU and US hours.</div>
 </footer>
 
-<script>document.getElementById('yil').textContent = new Date().getFullYear();</script>
+<script>
+  document.getElementById('yil').textContent = new Date().getFullYear();
+
+  // Formu etkinlestirmek icin: Cloudflare Worker adresini buraya yapistir.
+  // Bos birakilirsa form kendini gizler ve ziyaretci e-posta baglantisini kullanir.
+  const FORM_ENDPOINT = "";
+
+  (function () {
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('cf-status');
+    const button = document.getElementById('cf-send');
+
+    if (!FORM_ENDPOINT) { form.hidden = true; return; }
+
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      status.className = 'form-durum';
+      status.textContent = '';
+
+      const payload = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        message: form.message.value.trim()
+      };
+      if (!payload.name || !payload.email || !payload.message) {
+        status.className = 'form-durum hata';
+        status.textContent = 'Please fill in all three fields.';
+        return;
+      }
+
+      button.disabled = true;
+      status.textContent = 'Sending…';
+      try {
+        const res = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        form.reset();
+        status.className = 'form-durum ok';
+        status.textContent = 'Got it — I reply the same day.';
+      } catch (err) {
+        status.className = 'form-durum hata';
+        status.innerHTML = 'Could not send. Please email ' +
+          '<a href="mailto:sezerkiras28@gmail.com">sezerkiras28@gmail.com</a> instead.';
+      } finally {
+        button.disabled = false;
+      }
+    });
+  })();
+</script>
 </body>
 </html>
