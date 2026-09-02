@@ -380,6 +380,40 @@
 
     <div class="proje">
       <div class="proje-bas">
+        <h3>Company research pipeline</h3>
+        <span class="rozet">running</span>
+      </div>
+      <p>
+        Builds target lists before outreach: finds companies in a niche and area, pulls the
+        decision-maker's name, verifies the domain actually accepts mail. The interesting part
+        is what it does when it can't — it says so, and tells you what to do in that country.
+      </p>
+      <ul>
+        <li><strong>The rewrite that mattered:</strong> v1 scraped team pages for names and hit
+            ~10% across 21 randomly picked companies. The fix wasn't a smarter scraper — it was
+            a better source. Routed through Companies House instead, the same job runs at 100%
+            with no scraping at all.</li>
+        <li>Order is registry → team page → JS render → hand back to a human with instructions</li>
+        <li>Registry matching never guesses silently: searching a trading name can return a
+            different company ("Launch Global" → a coach operator), so it reports the overlap
+            score and returns nothing rather than the wrong director</li>
+        <li>Discovery scores opportunity and reachability separately — a business with no website
+            is the biggest opportunity and the hardest to reach, and one number hides that</li>
+        <li>Tracks cold-email law per country, because the answer differs: opt-out in the UK and
+            NL, prior consent required in Germany</li>
+      </ul>
+      <div class="etiketler">
+        <span class="etiket">Python</span><span class="etiket">httpx</span>
+        <span class="etiket">BeautifulSoup</span><span class="etiket">Playwright</span>
+        <span class="etiket">OpenStreetMap</span><span class="etiket">Companies House</span>
+      </div>
+      <div class="baglantilar">
+        <a href="https://github.com/SystSezer/sirket-arastirma">Source code →</a>
+      </div>
+    </div>
+
+    <div class="proje">
+      <div class="proje-bas">
         <h3>Price tracker</h3>
         <span class="rozet">running</span>
       </div>
